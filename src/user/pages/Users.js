@@ -5,19 +5,19 @@ const Users = () => {
 
   const USERS = [
     {
-      id: '1',
+      id: 'u1',
       name: 'Pranav',
       image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
       places: 3
     },
     {
-      id: '2',
+      id: 'u2',
       name: 'Lahu',
       image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
       places: 5
     },
     {
-      id: '3',
+      id: 'u3',
       name: 'Suchita',
       image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
       places: 5
