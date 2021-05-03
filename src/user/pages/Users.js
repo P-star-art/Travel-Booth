@@ -15,6 +15,12 @@ const Users = () => {
       name: 'Lahu',
       image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
       places: 5
+    },
+    {
+      id: '3',
+      name: 'Suchita',
+      image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
+      places: 5
     }
   ]
 
