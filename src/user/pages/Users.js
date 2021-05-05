@@ -1,32 +1,19 @@
 import React from 'react';
+
 import UsersList from '../components/UsersList';
 
 const Users = () => {
-
   const USERS = [
     {
       id: 'u1',
-      name: 'Pranav',
-      image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
+      name: 'Max Schwarz',
+      image:
+        'https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
       places: 3
-    },
-    {
-      id: 'u2',
-      name: 'Lahu',
-      image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
-      places: 5
-    },
-    {
-      id: 'u3',
-      name: 'Suchita',
-      image: 'https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg',
-      places: 5
     }
-  ]
+  ];
 
-  return (
-    <UsersList items={USERS} />
-  )
+  return <UsersList items={USERS} />;
 };
 
 export default Users;
