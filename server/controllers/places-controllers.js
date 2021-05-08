@@ -24,7 +24,7 @@ let DUMMY_PLACE = [
           lat: 40.7484405,
           lng: -73.9878584
         },
-        creator: 'u2'
+        creator: 'u1'
       }
 ]
 
@@ -40,15 +40,15 @@ const getPlaceById = (req, res, next) => {
     res.json({ place });
 }
 
-const getPlaceByUserId =  (req, res, next) => {
+const getPlacesByUserId =  (req, res, next) => {
     const userId = req.params.uid;
-    const userPlace = DUMMY_PLACE.find(u => {
+    const userPlaces = DUMMY_PLACE.filter(u => {
         return u.creator === userId;
     })
-    if (!userPlace) {
+    if (userPlaces.length === 0) {
         return next(new HttpError('Could not find a user place', 404));
     }
-    res.json({ userPlace });
+    res.json({ userPlaces });
 }
 
 const createPlace = (req, res, next) => {
@@ -90,7 +90,7 @@ const deletePlace = (req, res, next) => {
 }
 
 exports.getPlaceById = getPlaceById;
-exports.getPlaceByUserId = getPlaceByUserId;
+exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
