@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid');
+const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
-
 
 const USERS = [
     {
@@ -24,10 +24,16 @@ const getUsers = (req, res, next) => {
         throw new HttpError('Could not find any users', 404);
     }
 
-    res.status(200).json({ users:USERS });
+    res.status(200).json({ users: USERS });
 }
 
 const signup = (req, res, next) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new HttpError('Please provide valid inputs', 422);
+    }
+
     const { name, email, password } = req.body;
 
     const hasUser = USERS.find(u => u.email === email);
@@ -48,6 +54,11 @@ const signup = (req, res, next) => {
 }
 
 const login = (req, res, next) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new HttpError('Please provide valid inputs', 422);
+    }
 
     const { email, password } = req.body;
 
