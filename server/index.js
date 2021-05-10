@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
@@ -21,7 +22,15 @@ app.use((error, req, res, next) => {
     if (res.headerSent) {
         return next(error);
     }
-    res.status(error.code || 500).json({message: error.message || 'An error occured'});
+    res.status(error.code || 500).json({ message: error.message || 'An error occured' });
 })
 
-app.listen(5000);
+mongoose.connect('mongodb+srv://pranav:rUtTRIq5ACICd9vv@cluster0.lqzqj.mongodb.net/places?retryWrites=true&w=majority')
+    .then(() => {
+        console.log('CONNECTED TO DATABASE');
+        app.listen(5000);
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+
