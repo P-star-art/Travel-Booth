@@ -72,7 +72,7 @@ try {
 const createPlace = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        throw new HttpError('Please provide valid inputs', 422);
+        return next(new HttpError('Please provide valid inputs', 422));
     }
 
     const { title, description, address, creator } = req.body;
@@ -103,7 +103,7 @@ const updatePlace = async (req, res, next) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        throw new HttpError('Please provide valid inputs', 422);
+        return next(new HttpError('Please provide valid inputs', 422));
     }
 
     const { title, description } = req.body;
