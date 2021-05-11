@@ -4,21 +4,6 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
-const USERS = [
-    {
-        id: 'u1',
-        name: 'Max Schwarz',
-        email: 'max@gmail.com',
-        password: '123456',
-    },
-    {
-        id: 'u2',
-        name: 'Manu Biatch',
-        email: 'manu@gmail.com',
-        password: '123456'
-    }
-];
-
 const getUsers = async (req, res, next) => {
 
     let users;
@@ -40,7 +25,7 @@ const signup = async (req, res, next) => {
         return next(new HttpError('Please provide valid inputs', 422));
     }
 
-    const { name, email, password, places } = req.body;
+    const { name, email, password } = req.body;
 
     let existingUser;
 
@@ -61,7 +46,7 @@ const signup = async (req, res, next) => {
         email,
         password,
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-        places
+        places: []
     })
 
     try {
