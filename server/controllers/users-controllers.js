@@ -1,6 +1,7 @@
 const { v4: uuid } = require('uuid');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
@@ -45,7 +46,7 @@ const signup = async (req, res, next) => {
     let hashedPassword;
 
     try {
-        hashedPassword = await bcrypt.hash(password);
+        hashedPassword = await bcrypt.hash(password, 12);
     } catch (err) {
         return next(new HttpError('Could not create an user, Please try again', 500));
     }
@@ -65,7 +66,16 @@ const signup = async (req, res, next) => {
         return next(error);
     }
 
-    res.status(201).json({ user: createdUser.toObject({ getters: true }) });
+    let token;
+
+    try {
+        token = jwt.sign({ userId: createdUser.id, email: createdUser.email }, 'supersecret', { expiresIn: '1h' })
+    } catch (err) {
+        const error = new HttpError('Signing up failed', 500);
+        return next(error);
+    }
+
+    res.status(201).json({ userId: createdUser.id, email:createdUser.email, token: token });
 }
 
 const login = async (req, res, next) => {
@@ -92,7 +102,7 @@ const login = async (req, res, next) => {
 
     let isValidPassword = false;
     try {
-        isValidPassword = await bcrypt.compare(password, existingUser.password)
+        isValidPassword = await bcrypt.compare(password, identifiedUser.password)
     } catch (err) {
         return next(new HttpError('Invalid Credentials', 500));
     }
@@ -101,8 +111,17 @@ const login = async (req, res, next) => {
         const error = new HttpError('Invalid credentials, could not log you in', 500);
         return next(error);
     }
-    
-    res.json({ message: "logged in!", user: identifiedUser.toObject({ getters: true }) });
+
+    let token;
+
+    try {
+        token = jwt.sign({ userId: identifiedUser.id, email: identifiedUser.email }, 'supersecret', { expiresIn: '1h' })
+    } catch (err) {
+        const error = new HttpError('Logging in failed', 500);
+        return next(error);
+    }
+
+    res.json({ userId:identifiedUser.id, email: identifiedUser.email, token:token });
 }
 
 exports.getUsers = getUsers;
