@@ -41,7 +41,7 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500).json({ message: error.message || 'An error occured' });
 })
 
-mongoose.connect('mongodb+srv://pranav:rUtTRIq5ACICd9vv@cluster0.lqzqj.mongodb.net/places?retryWrites=true&w=majority')
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.lqzqj.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
     .then(() => {
         console.log('CONNECTED TO DATABASE');
         app.listen(5000);
